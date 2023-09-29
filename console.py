@@ -125,7 +125,7 @@ class HBNBCommand(cmd.Cmd):
             cls = args[0]
         # if class exists, create new instance
         new_instance = HBNBCommand.classes[cls]()
-        # if there are more arguments remove class name 
+        # if there are more arguments remove class name
         if args[1]:
             args = args[1:]
         else:
@@ -134,7 +134,7 @@ class HBNBCommand(cmd.Cmd):
             print(new_instance.id)
             storage.save()
             return
-        
+
         # split each arg into key and value pairs
         for argument in args:
             split_arg = argument.split("=")
@@ -151,9 +151,9 @@ class HBNBCommand(cmd.Cmd):
                 value = value[1:-1]
             # attribute is set to that key in dict of objects
             setattr(new_instance, key, value)
-            new_instance.save()
-            print(new_instance.id)
-            
+        # new object is saved after seeting non-nullable attributes
+        new_instance.save()
+        print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
