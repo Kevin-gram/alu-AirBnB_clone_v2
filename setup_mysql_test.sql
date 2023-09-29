@@ -1,4 +1,5 @@
 -- Creating hbnb database test-file
+-- try this
 
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
 DROP USER IF EXISTS 'hbnb_test'@'localhost';
