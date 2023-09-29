@@ -32,3 +32,42 @@ class DBStorage:
             HBNB_MYSQL_USER, HBNB_MYSQL_PWD, HBNB_MYSQL_HOST, HBNB_MYSQL_DB), pool_pre_ping=True)
         if HBNB_ENV == "test":
             Base.metadata.drop_all(self.__engine)
+
+    def all(self, cls=None):
+        """query database session"""
+        all_dict = {}
+        for itr in classes:
+            if cls == None or cls == itr:
+                objs = self.__session.query(classes[itr].all())
+                for obj in objs:
+                    key = obj.__class__.__name__ + '.' + obj.id
+                    all_dict[key] = obj
+        return all_dict
+
+    def new(self, obj):
+        """add new obj"""
+        if obj != None:
+            self.__session.add(obj)
+            self.save()
+
+    def save(self):
+        """commit changes"""
+        self.__session.commit()
+
+    def delete(self, obj=None):
+        """delete obj if exists"""
+        if obj != None:
+            del obj
+            self.save()
+
+    def reload(self):
+        """reload"""
+        Base.metadata.create_all(self.__engine)
+        session_factory = sessionmaker(
+            bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(session_factory)
+        self.__session = Session()
+
+    def close(self):
+        """calls close on the class session"""
+        self.__session.close()
