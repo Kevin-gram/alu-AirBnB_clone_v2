@@ -127,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
         # if class exists, create new instance
         new_instance = HBNBCommand.classes[cls]()
         # if there are more arguments remove class name
-        if args[1]:
+        if len(args) > 0:
             args = args[1:]
         else:
             # save before returning, in case using fileStorage
